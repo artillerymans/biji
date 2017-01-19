@@ -40,18 +40,19 @@
 
 5. 回调的私有方法
 
-       _keyShow() {
+       
+        _keyShow() {
        
            ToastAndroid.show("键盘显示",ToastAndroid.SHORT);
 	   
-       }
+        }
 
 
-       _keyHide() {
+        _keyHide() {
        
            ToastAndroid.show("键盘隐藏",ToastAndroid.SHORT);
 	   
-       }
+        }
        
        
        
