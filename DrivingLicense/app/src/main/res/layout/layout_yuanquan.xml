@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/m10dp"
+        android:orientation="vertical">
+
+        <com.example.zhiwei_zhu.drivinglicense.View.YuanButton
+            style="@style/YuanStyle"
+            app:names="@string/mncs"
+            android:onClick="onClick"
+            android:id="@+id/moniceshi"/>
+        <com.example.zhiwei_zhu.drivinglicense.View.YuanButton
+            style="@style/YuanStyle"
+            android:onClick="onClick"
+            app:names="@string/qbcs"
+            android:id="@+id/tikuquce"
+            android:layout_marginTop="@dimen/m40dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

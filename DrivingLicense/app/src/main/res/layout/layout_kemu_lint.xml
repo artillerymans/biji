@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/m54dp"
+        android:layout_margin="@dimen/m10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/km1_cb"
+            android:text="@string/kemu1"
+            android:background="@drawable/km_backgrund"
+            style="@style/KmStyle"/>
+
+        <CheckBox
+            android:id="@+id/km2_cb"
+            style="@style/KmStyle"
+            android:background="@drawable/km_backgrund"
+            android:text="@string/kemu2"
+            />
+
+        <CheckBox
+            android:id="@+id/km3_cb"
+            style="@style/KmStyle"
+            android:background="@drawable/km_backgrund"
+            android:text="@string/kemu3"
+            />
+
+        <CheckBox
+            android:id="@+id/km4_cb"
+            android:text="@string/kemu4"
+            style="@style/KmStyle"/>
+    </LinearLayout>
+
+</LinearLayout>

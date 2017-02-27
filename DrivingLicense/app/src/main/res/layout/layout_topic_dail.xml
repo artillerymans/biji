@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_timu"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/m10dp"
+            android:textSize="@dimen/font18"
+            android:text="这个标志是何含义？"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/img_tupian"
+            android:layout_margin="@dimen/m10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="right"/>
+
+
+        <!--选择布局-->
+        <LinearLayout
+            android:id="@+id/layout_xuanzhe"
+            android:layout_margin="@dimen/m10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/rg_group_xz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rg_group_xz_a"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/font16"
+                            android:layout_height="@dimen/m40dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rg_group_xz_c"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/font16"
+                            android:layout_height="@dimen/m40dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rg_group_xz_b"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/font16"
+                            android:layout_height="@dimen/m40dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rg_group_xz_d"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/font16"
+                            android:layout_height="@dimen/m40dp"/>
+                </RadioGroup>
+
+        </LinearLayout>
+
+
+        <!--判断布局-->
+        <LinearLayout
+            android:id="@+id/layout_panduan"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/m10dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+                <RadioGroup
+                    android:id="@+id/rg_group_pd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rg_group_pd_yes"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/font16"
+                            android:layout_height="@dimen/m40dp"/>
+                        <RadioButton
+                            android:id="@+id/rg_group_pd_no"
+                            android:textSize="@dimen/font16"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/m40dp"/>
+                </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_jishidaan"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/m10dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btn_next"
+                    android:text="@string/next"
+                    android:textSize="@dimen/font16"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/m10dp"
+                    android:layout_height="@dimen/m45dp"/>
+
+        </LinearLayout>
+
+
+
+
+</LinearLayout>

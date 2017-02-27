@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Driving License</string>
+    <string name="kemu1">科目1</string>
+    <string name="kemu2">科目2</string>
+    <string name="kemu3">科目3</string>
+    <string name="kemu4">科目4</string>
+    <string name="mncs">模拟测试</string>
+    <string name="qbcs">题库全测</string>
+    <string name="back">返回</string>
+    <string name="stop">开始</string>
+    <string name="tilteltext">45:00</string>
+    <string name="next">下一题</string>
+</resources>

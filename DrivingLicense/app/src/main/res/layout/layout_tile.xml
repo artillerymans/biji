@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/m45dp"
+              android:layout_margin="@dimen/m10dp"
+              android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/back"
+        style="@style/tiltelStyle"
+        android:layout_weight="1"
+        android:text="@string/back"
+        />
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_weight="3"
+        style="@style/tiltelStyle"/>
+    <TextView
+        android:id="@+id/stop"
+        style="@style/tiltelStyle"
+        android:layout_weight="1"
+        android:text="@string/stop"
+        />
+
+</LinearLayout>
