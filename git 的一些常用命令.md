@@ -189,6 +189,25 @@ df -lh 查看剩余空间
 git show 615f37247cf821bf80c519d6b9b7423ef743ce19>~/ggg.txt 把提交的详细信息打印到ggg.tex文件上
 
 
+***
+##### 创建分支并且推送到远程 
+
+1. git branch master_dex   //创建master_dex的分支
+2. git checkout master_dex  //切换到master_dex分支上
+3. git push branch master_dex  //把master_dex分支推送到远程
+
+***
+#### 创建tag并推送到远程仓库
+ 
+1. git tag 1.0.0     //创建一个1.0.0的tag
+2. git push origin 1.0.0   //推送单个 tag号为:1.0.0 到远程
+3. git push --tags   //推送所有tag到远程
+
+***
+
+
+
+
 
 
 
