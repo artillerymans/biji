@@ -1,0 +1,274 @@
+解决方案：针对Ferace项目
+
+1 、问题：AAPT err(Facade for): libpng error: Not a PNG file 错误 
+
+	造成原因：不是png的文件，被命名成了png后缀的文件
+    答案：
+	在模块下的build.gradle中配置下面两个信息，再clear project。
+	android{
+		buildtoolsVersion '23.0.1'
+		
+		aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+	}
+	
+2、 导入eclipse中的项目中遇到找不到com.android.application问题
+	解决方案：
+
+	项目根目录下的build.gradle中添加下面一段 
+	
+	buildscript {
+		repositories {
+			jcenter()
+		}
+		dependencies {
+			classpath 'com.android.tools.build:gradle:2.1.3'
+		}
+	}
+
+	allprojects {
+		repositories {
+			jcenter()
+		}
+	}
+
+	task clean(type: Delete) {
+		delete rootProject.buildDir
+	}
+	
+	
+错误提示：	Error:org.gradle.api.internal.tasks.DefaultTaskInputs$TaskInputUnionFileCollection cannot be cast to org.gradle.api.internal.file.collections.DefaultConfigurableFileCollection
+			Possible causes for this unexpected error include: Gradle's dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)
+			Re-download dependencies and sync project (requires network)</a></li><li>The state of a Gradle build process (daemon) may be corrupt. Stopping all Gradle daemons may solve this problem.
+			Stop Gradle build processes (requires restart)Your project may be using a third-party plugin which is not compatible with the other plugins in the project or the version of Gradle requested by the project.In the case of corrupt Gradle processes, you can also try closing the IDE and then killing all Java processes.	
+
+	解决方案：改动为如下就好了
+	dependencies {
+		classpath 'com.android.tools.build:gradle:2.3.1'
+	}
+	
+	
+	
+
+	
+	
+3、 错误提示  Error:Execution failed for task ':processDebugManifest'.
+> Manifest merger failed : Attribute application@icon value=(@drawable/icon) from AndroidManifest.xml:52:9-38
+	is also present at [Ferace:IOT_Android_Phone:unspecified] AndroidManifest.xml:13:9-45 value=(@drawable/ic_launcher).
+	Suggestion: add 'tools:replace="android:icon"' to <application> element at AndroidManifest.xml:49:5-205:19 to override.	
+	
+	解决方法：把IOT_Android_Phone中的AndroidManifest.xml:13:9-45 value=(@drawable/ic_launcher)改为  @drawable/icon  
+	
+	<application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+    </application>
+	
+4、错误提示：Error:Error: This fragment should provide a default constructor (a public constructor with no arguments) (com.mltcode.android.ferace.fragment.HomeRunFragment) [ValidFragment]
+   解决方法：类前面加上  @SuppressLint("ValidFragment")
+	
+
+5、错误提示：Error: "baidutieba_client_inavailable" is not translated in "en" (English) [MissingTranslation]
+	解决方法：在对应的资源文件 <resources >内加入   如下：
+	
+	<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+	
+6、Error: Expected resource of type id [ResourceType]解决办法
+   解决方法：在类的上面加上 @SuppressWarnings("ResourceType")
+
+
+7、错误提示： Error:warning: Ignoring InnerClasses attribute for an anonymous inner class  
+重写这个方法 在application中
+@Override   
+protected void attachBaseContext(Context base) {  
+    super.attachBaseContext(base); MultiDex.install(this);  
+}
+
+
+8、编译时出现 警告提示：warning: Ignoring InnerClasses attribute for an anonymous inner class    debug版本不会有任何影响 release版本无法打包
+出现的原因：1、引用了相同的jar （疑问：在eclipse上不会报错所以可以排除） 
+			2、方法数量超过了 
+			3、混淆的问题
+解决方法： 在proguard-rules.pro 中添加 一行  -keepattributes EnclosingMethod    
+
+
+9、 错误提示：Error:Error converting bytecode to dex: Cause: com.android.dex.DexException: Multiple dex files defi   
+	出现的原因：1、引用了相同的jar
+	解决方法：build.gradle 下
+	改动前：	
+	dependencies {
+		compile fileTree(dir: 'libs', include: '*.jar')
+	}
+	改动后：
+	dependencies {
+		provided fileTree(dir: 'libs', include: '*.jar')
+	}
+	
+	
+	
+10.安装Studio后直接配置  （加速编译）
+	开启gradle单独的守护进程
+	在gradle.properties文件中输入如下代码：开启gradle单独的守护进程
+	
+	
+	在gradle.properties文件中输入如下代码：
+	
+		org.gradle.daemon=true
+		org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+		org.gradle.parallel=true
+		org.gradle.configureondemand=true	
+		
+		
+11、申请大内存  （加速编译）
+
+	as安装目录/bin/studio64.vmoptions or studio.vmoptions(linux下，其他系统找类似文件)
+	使用文本编辑器打开，找到起始两行，如下
+	-Xms128m
+	-Xmx750m
+
+	修改最小值和最大值，建议为
+	-Xms256m
+	-Xmx2048m		
+	
+12、incremental dex
+改变incremental dexing的值，这是一个实验的功能并且默认是关闭的。打开这个开关有可能会导致构建失败，错误信息类似jdk finished with non-zero exit value 2
+（尤其是在连续运行的时候），但我还是推荐你尝试一下，看看它是否对你有用。
+
+
+在主APP模块的build.gradle文件中，添加下面的代码：
+dexOptions {
+    incremental true
+}
+
+13、在项目的根build.gradle脚本里添加屏蔽Task的代码:  （加速编译）
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+
+    //skip Test tasks
+    gradle.taskGraph.whenReady {
+        tasks.each { task ->
+            if (task.name.equals('mockableAndroidJar') || task.name.contains("Test"))
+            {
+                task.enabled = false
+            }
+        }
+    }
+}
+
+14、重新设置JDK位置就可以了
+Error:Execution failed for task ':library:compileReleaseJava'.
+> Cannot find System Java Compiler. Ensure that you have installed a JDK (not just a JRE) and configured your JAVA_HOME system variable to point to the according directory.
+
+
+15、aapt 问题  资源国际化问题 字符串资源存在没有国际化问题
+	
+ //图片资源AAPT问题
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+    //字符串资源存在没有国际化
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+	
+16、右滑退出的问题：Android 最新的主题 自动实现  老旧主题不会   	
+
+17、DexIndexOverflowException: Cannot merge new index 65536 into a non-jumbo instruction!  按包计算dex  添加如下build.gradle下即可
+	
+	android{
+		dexOptions {
+			jumboMode true
+		}
+	}
+
+
+UI方面
+
+1、ScrollView中的组件设置android:layout_height="fill_parent"不起作用的解决办法
+在ScrollView中添加一个Android:fillViewport="true"属性就可以了。顾名思义，这个属性允许 ScrollView中的组件去充满它。     
+
+2、 关于android之ScrollView里嵌套ListView 出现的 listview高度固定。  http://www.eoeandroid.com/thread-246995-1-1.html
+
+
+Android 录音框架
+		https://github.com/xzp-github/AndroidLibs/tree/master/%E9%9F%B3%E8%A7%86%E9%A2%91Audio_Video
+		
+
+ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();  
+
+https://github.com/android   github Android源码下载
+
+
+签名：
+
+	signingConfigs{
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('./debug.keystore')
+            storePassword 'android'
+
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+	
+	
+	
+	
+3、完美解决RecyclerView滑动边缘阴影效果
+	设置滑动到边缘时无效果模式：
+	android:overScrollMode="never"
+	
+	
+
+4、 问题背景：百度地图导航页因为手表屏幕有限，所以想把上面的诱导信息去掉，但是官网并没有找到相关的api，所以这里有了下面这个办法，先循环遍历id，测试出来并确定sdk中的id值 然后直接findview后隐藏，下面是核心代码
+
+    private void getGuideInfoID(View view) {
+    	ViewGroup fl=(ViewGroup)view;
+    	getViewGroup(fl);
+	}
+
+	private void getViewGroup(ViewGroup fl) {
+		int size=fl.getChildCount();
+    	for(int i=0;i<size;i++){
+    		View c=fl.getChildAt(i);
+    		if(c instanceof ViewGroup){
+    			getGuideInfoID(c);
+    		}else if(c instanceof TextView){
+    			TextView tx=(TextView)c;
+    			System.out.println("TextView id:"+tx.getId()+"   text:"+tx.getText());
+    		}
+    	}
+	}
+
+
+5、not found for signing config 'externalOverride'. 错误提示  解决方式：重新选择一下签名文件即可！！！
+
+
+
+	
+	
+	
+	
+	
+	
+
+
+
+
+      
